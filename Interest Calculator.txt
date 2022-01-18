@@ -1,0 +1,83 @@
+// Andrew Hamilton
+
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+class InterestCalculator{
+    private: 
+    
+    double roundToHundreth(double number){
+	double roundedNum;
+	roundedNum = floor(number * 100 + .5)/100;
+	return roundedNum;
+    }
+
+    public:
+    
+    void greeting(){
+    cout<<"Hi, welcome to Interest Calculator!" << endl;        
+    }
+    
+    double getInterestRate(){
+    double interestRate;
+    cout << "What is the interest Rate in percent (ex 4.25% is 4.25)?: ";
+    cin >> interestRate;
+    return interestRate;
+    }
+    
+    int getTimesCompounded(){
+    int timesCompounded;
+    cout << "What is the number of times compounded?: ";
+    cin >> timesCompounded;
+    return timesCompounded;
+    }
+    
+    double getPrinciple(){
+    double principle;
+    cout << "What is the principle amount?: ";
+    cin >> principle;
+    return principle;    
+    }
+    
+    double calculateInterest(double interestRate, 
+    double timesCompounded, double principle){
+    double interest = principle*pow((1+((interestRate * .01)/timesCompounded)),timesCompounded);
+    interest -= principle;
+    interest = roundToHundreth(interest);
+    return interest;
+    }
+    
+    void outro(double interestRate, int timesCompounded,
+    double principle, double interest, double total){
+    cout << fixed << showpoint << setprecision(2);
+    cout << endl << "Interest Rate: " << setw(21) << right << interestRate << "%" << endl
+    << "Times Compounded: " << setw(18) << right << timesCompounded << endl
+    << "Principle: " << setw(18) << right << "$" << principle << endl
+    << "Interest: " << setw(20) << right << "$" << interest << endl
+    << "Amount in Savings: " << setw(10) << right << "$" << total;        
+    }
+    
+};
+
+
+int main()
+
+{
+    
+    InterestCalculator calculator;
+    
+    calculator.greeting();
+    double interestRate = calculator.getInterestRate();
+    int timesCompounded = calculator.getTimesCompounded();
+    double principle = calculator.getPrinciple();
+    double interest = calculator.calculateInterest(interestRate,
+    timesCompounded, principle);
+    double total = principle + interest;
+    calculator.outro(interestRate, timesCompounded, principle,
+    interest, total);
+
+    return 0;
+}
